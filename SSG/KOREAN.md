@@ -10,12 +10,12 @@ SSG.COM의 tb-be 아키텍처와 핵페스트에서 사용된 기술들은 다�
 
 - [Azure Batch and Batch AI](https://azure.microsoft.com/en-us/services/batch-ai/) : 딥러닝 모델 트레이닝을 위한 운영 환경
 - [Azure Logic App](https://azure.microsoft.com/en-us/services/logic-apps/) : 트레이닝 모델이 변경되었음을 관리자에게 통지
-- [Web App for Container on Linux](https://docs.microsoft.com/en-us/azure/app-service/containers/tutorial-custom-docker-image) :  AI inference 서비스의 호스팅 환경
+- [Web App for Container on Linux](https://docs.microsoft.com/en-us/azure/app-service/containers/tutorial-custom-docker-image) :  AI inference 서비스의 호스팅 환경, 기타, Python Dependency 가 있는 Web Service 의 경우 이곳에서 Serving 되도록 구성 하였음.(2018년 5월 현재 Azure Function이 Python Preview 단계 였기 때문.)
 - [Azure Container Registry](https://azure.microsoft.com/en-us/services/container-registry/) : 사설 도커 이미지 저장소
 - [Container WebHook](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-webhook)을 사용하여 Azure Container Registry에서 Web App for Container로 [Continuous Deployment](https://docs.microsoft.com/en-us/azure/app-service/app-service-continuous-deployment) 적용
 - [Deployment Slot](https://docs.microsoft.com/en-us/azure/app-service/web-sites-staged-publishing) : Web App for Container의 스테이징/운영 간에 전환(Swap)을 위해서 배포 슬롯을 사용
 - [Azure Functions](https://azure.microsoft.com/en-us/services/functions/) : 고객의 API Gateway(Chatbot)을 위한 서버리스 플랫폼
-- Continuous Deployment를 위해 [Github Private Repository](https://github.com/) 사용
+- Continuous Deployment를 위해 [Github Private Repository](https://github.com/) 사용. (2018년 3월 github 를 VSTS 프로젝트로 이관하였음)
 - [Cosmos DB (SQL)](https://docs.microsoft.com/en-us/azure/cosmos-db/introduction) : 채팅 사용자의 상태 저장소
 - [Azure Storage Queue](https://azure.microsoft.com/en-us/services/storage/queues/) : Azure Function 간 통신 매개
 - [Application Insight](https://azure.microsoft.com/en-us/services/application-insights/) : 게이트웨이의 성능과 사용 통계를 모니터링
@@ -44,19 +44,20 @@ Hackfest : 2017년 12월 18일 ~ 22일 / 5 일간
 ## Partner profile 
 
 신세계 그룹은 대한민국을 대표하는 가장 큰 종합소매사업자이다. 신세계 그룹 산하의 계열사들을 통해 소매, 패션, 호텔업, 식음료, 인프라, 다목적 쇼핑몰 등 다양한 사업을 영위하고 있다.
-신세계 그룹은 그 동안 이마트, 신세계백화점, 트레이더스, 신세계TV쇼핑에서 각자 운영되던 온라인 쇼핑몰을 통합한 SSG.COM이라는 통합 온라인 쇼핑몰 서비스를 2014년에 런칭했다. SSG.COM 서비스는 매년 30%가 넘는 초고속 성장을 하고 있으며 고객센터를 통해 하루에 10,000건에 달하는 고객 서비스 콜이 유입되고 있다. 
+신세계 그룹은 그 동안 이마트, 신세계백화점, 트레이더스, 신세계TV쇼핑 등에서 각자 운영되던 온라인 쇼핑몰을 통합한 SSG.COM이라는 통합 온라인 쇼핑몰 서비스를 2014년에 런칭했다. SSG.COM 서비스는 매년 30%가 넘는 초고속 성장을 하고 있으며 고객센터를 통해 하루에 20,000건에 달하는 고객 서비스 콜이 유입되고 있다. 
 
-고객센터 운영비용 절감과 고객들에게 더 좋은 사용자 경험을 제공하기 위해 오픈소스 기술 기반의 인공지능 챗봇 서비스 개발 프로젝트를 2017년 중반에 착수했으며 2018년 상반기에 정식 출시를 계획하고 있다. 
+고객센터 운영비용 절감과 고객들에게 더 좋은 사용자 경험을 제공하기 위해 오픈소스 기술 기반의 인공지능 챗봇 서비스 개발 프로젝트를 2017년 중반에 착수했으며 2018년 상반기에 정식 출시를 계획하고 있다. (2018년 3월 말 정식으로 Production 오픈 하였다.)
 
-또한 경쟁사들이 자사의 e-commerce 서비스에 공격적으로 AI 기술을 접목시키고 있는 시장 상황에 대응하기 위해 이후 이 AI 챗봇 서비스를 통해 고객서비스 업무 이외에도 다양한 형태의 AI 기술을 추가하여 서비스를 제공할 예정이다.
+또한 경쟁사들이 자사의 e-commerce 서비스에 공격적으로 AI 기술을 접목시키고 있는 시장 상황에 대응하기 위해 이후 이 AI 챗봇 서비스를 통해 고객서비스 업무 이외에도 다양한 형태의 AI 기술을 추가하여 서비스를 제공할 예정이다. 자연어 기반 장보기 봇 프로젝트가 현재 추가로 진행 중이다.
 
 ## Problem statement
 
-고객은 현재 Deep Learning 기반의 AI Chatbot 서비스를 개발하고 있다. 현재는 시범적으로 모든 서비스를 Azure의 VM 상에서 테스트를 하고 있다. 테스트되고 있는 서비스 영역은 총 4개의 영역으로서, 그들은 각각 AI Model Traing Layer와 AI Serving(Inference) Layer, API Gateway(Chatbot App) Layer, Admin Management Web Layer로 나누어져 있다. 모든 서비스들은 현재 Azure VM에서 테스트되고 있다.
+고객은 현재 Deep Learning 기반의 AI Chatbot 서비스를 개발하고 있다. 현재는 시범적으로 모든 서비스를 Azure의 VM(GPU DSVM(Data Science VM)) 상에서 테스트를 하고 있다. 테스트되고 있는 서비스 영역은 총 4개의 영역으로서, 그들은 각각 AI Model Traing Layer와 AI Serving(Inference) Layer, API Gateway(Chatbot App) Layer, Admin Management Web Layer로 나누어져 있다. 모든 서비스들은 현재 Azure VM에서 테스트되고 있다.
 
 IaaS 기반의 아키텍처는 추후 운영 규모가 커질 경우, 자연스럽게 관리해야 할 VM의 수가 늘어나게 되면서 Infra 관리 및 유지보수에 추가적인 리소스를 투입해야 하기에 효율적이지 않다고 판단했다. 그렇기에 가급적이면 IaaS를 사용하지 않는 아키텍처를 원했다. 또한, AI Model Training Layer의 경우 상시 운영해야 할 필요도 없는데 GPU가 지원되는 VM을 계속해서 사용해야만 하기에 비용적인 측면에서도 부담스러워했다. 해서, 고객은 가급적 모든 서비스를 Managed Service 환경, 즉 PaaS 환경을 활용하는 아키텍처로 변경하고 싶어했다.
 
 또한, AI Inference Layer의 경우는 고객사 자체의 사전 테스트를 통해서 굳이 GPU가 필요하지 않다는 결론을 얻었으며, 이번 핵페스트에서는 가급적 Azure App Service를 적용하면서 Web App의 수많은 훌륭한 기능들(자동 배포, 배포 슬롯 등)을 활용하고 싶어했다. 
+(비고 : Chatbot의 경우 Batch Inference 가 아닌, Realtime Online Inference 시나리오에 해당되며, Batch Size 가 1인 특수성이 있다. 이 경우의 CPU와 GPU 의 Inference 성능 차이를 실험한 결과는 이곳에 블로깅 하였다. [miniBatch Deep Learning Realtime Inferece 성능 비교, CPU vs GPU]http://hoondongkim.blogspot.kr/2017/12/deep-learning-inference-serving.html
 
 더불어, Chatbot App에 해당하는 API Gateway 영역 역시 마이크로서비스나 서버리스 아키텍처를 도입해서 개발자들이 개별 로직에만 집중할 수 있도록 개선하고 싶어했다.
 
